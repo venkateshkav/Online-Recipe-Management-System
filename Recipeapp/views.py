@@ -18,7 +18,7 @@ def edit_category(request,ct_id):
     data = Category.objects.get(id=ct_id)
     form = CategoryForm(instance=data)
     if request.method == "POST":
-        form = CategoryForm(instance=data,data=request.POST)
+        form = CategoryForm(request.POST,request.FILES,instance=data)
         if form.is_valid():
             form.save()
         return redirect('category')
@@ -41,7 +41,7 @@ def edit_recipe(request,re_id):
     data = Recipe.objects.get(id=re_id)
     form = RecipeForm(instance=data)
     if request.method == "POST":
-        form = RecipeForm(instance=data,data=request.POST)
+        form = RecipeForm(request.POST,request.FILES,instance=data)
         if form.is_valid():
             form.save()
         return redirect('recipe')
@@ -63,9 +63,9 @@ def chef_data(request):
 
 def edit_chef(request,ch_id):
     data = Chef.objects.get(id=ch_id)
-    form = ChefForm(instance=data)
+    form = ChefForm(instance=data) 
     if request.method == "POST":
-        form = ChefForm(instance=data,data=request.POST)
+        form = ChefForm(request.POST,request.FILES,instance=data)
         if form.is_valid():
             form.save()
         return redirect('chef')
