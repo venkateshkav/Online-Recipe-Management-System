@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Data</title>
+    <style>
+        img{
+            height: 250px;
+            width: 250px;
+        }
+    </style>
 </head>
 <body>
     <h1>Recipe</h1>
@@ -15,15 +21,16 @@
     <h2>Recipe Data</h2>
     {% for i in data %}
     <hr>
-    <li> {{i.title}} </li>
-    <li> {{i.ingredients}} </li>
-    <li> {{i.steps}} </li>
-    <li> {{i.prep_time}} </li>
-    <li> {{i.cook_time}} </li>
-    <li> {{i.difficulty}} </li>
-    <li> {{i.created_on}} </li>
-    <img src="{{i.image.url}}" alt="Recipe">
-    <a href="{{i.recipe_file}}">Recipe File</a>
+    <li> <strong>{{i.id}}.Title:</strong> {{i.title}} </li>
+    <li> <strong>Ingredients:</strong> {{i.ingredients}} </li>
+    <li> <strong>Steps:</strong> {{i.steps}} </li>
+    <li> <strong>Preparation_time:</strong> {{i.prep_time}}mins </li>
+    <li> <strong>Cook_time:</strong> {{i.cook_time}}mins </li>
+    <li> <strong>Difficulty:</strong> {{i.difficulty}} </li>
+    <li> <strong>Created_on:</strong> {{i.created_on}} </li>
+    <li> <img src="{{i.image.url}}" alt="Recipe"> </li>
+    <li> <a href="{{i.recipe_file.url}}" target="_blank">Recipe File</a> </li>
+    <li> <a href="{% url 'edit_re' i.id %}">Edit</a> <a href="{% url 'del_re' i.id %}">Delete</a> </li>
     <hr>
     {% endfor %}
 </body>

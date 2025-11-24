@@ -17,6 +17,7 @@
     <li> {{i.name}} </li>
     <li> {{i.description}} </li>
     <li> {{i.created_on}} </li>
+    <li> <a href="{% url 'edit_ct' i.id %}">Edit</a> <a href="{% url 'del_ct' i.id %}">Delete</a> </li>
     <hr>
     {% endfor %}
 </body>

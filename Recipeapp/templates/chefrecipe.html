@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chefrecipe Data</title>
+    <style>
+        img{
+            width: 250px;
+            height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ChefRecipe</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_table}}
+        <button>ADD</button>
+    </form>
+<h2>ChefRecipe Data</h2>
+{% for i in data %}
+<hr>
+<li> <strong> {{i.id}}.Chef:</strong> {{i.chef}} </li>
+<li> <strong>Recipe:</strong> {{i.recipe}} </li>
+<li> <strong>Created date:</strong> {{i.created_date}} </li>
+<hr>
+{% endfor %}
+</body>
+</html>

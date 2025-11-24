@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Data</title>
+    <style>
+        img{
+            width: 250px;
+            height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chef</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_table}}
+        <button>ADD</button>
+    </form>
+<h2>Chef Data</h2>
+{% for i in data %}
+<li> Chef Name: {{i.chef_name}} </li>
+<li> Email: {{i.email}} </li>
+<li> Phone: {{i.phone}} </li>
+<li> Experience: {{i.experience}}yrs </li>
+<li><img src="{{i.profile_photo.url}}" alt="img"> </li>
+<li> <a href="{% url 'edit_ch' i.id %}">Edit</a> <a href="{% url 'del_ch' i.id %}">Delete</a> </li>
+{% endfor %}
+</body>
+</html>

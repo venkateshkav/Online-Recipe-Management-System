@@ -19,6 +19,9 @@ class Recipe(models.Model):
     image = models.ImageField(upload_to="img")
     recipe_file = models.FileField(upload_to="file")
 
+    def __str__(self):          
+        return self.title
+
 class Chef(models.Model):
     chef_name = models.CharField()
     email = models.EmailField(unique=True)
@@ -30,8 +33,12 @@ class Chef(models.Model):
         return self.chef_name
     
 class ChefRecipe(models.Model):
+    
     chef = models.ForeignKey(Chef,on_delete=models.CASCADE,null=True,blank=True)
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE,null=True,blank=True)
     created_date = models.DateField()
+
+    def __str__(self):
+        return self.chef
 
     
