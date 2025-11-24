@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from .models import *
 from .forms import *
+from django.db.models import Count, Avg, Max, Sum
 
 
 # Create your views here.
@@ -85,6 +86,30 @@ def chefrecipe_data(request):
     return render(request,"chefrecipe.html",{"form":form,"data":data})
 
 def filter_data(request):
-    difficulty = Recipe.objects.filter(difficulty= "Easy")
-    return render(request,"dashboard.html",{"difficulty":difficulty})
+    easy_recipes = Recipe.objects.filter(difficulty="Easy")
+    desserts_recipes = Recipe.objects.filter(category__name="Desserts")
+    prep_lt_cook = Recipe.objects.filter(prep_time__lt=models.F('cook_time'))
+    experienced_chefs = Chef.objects.filter(experience__gt=5)
+
+    # Aggregations
+    recipes_count_category = Recipe.objects.values('category__name').annotate(count=Count('id'))
+    recipes_count_chef = ChefRecipe.objects.values('chef__chef_name').annotate(count=Count('recipe'))
+    avg_cook_time = Recipe.objects.aggregate(Avg('cook_time'))
+    max_prep_time = Recipe.objects.aggregate(Max('prep_time'))
+    total_chef_exp = Chef.objects.aggregate(Sum('experience'))
+
+    context = {
+        "easy_recipes": easy_recipes,
+        "desserts_recipes": desserts_recipes,
+        "prep_lt_cook": prep_lt_cook,
+        "experienced_chefs": experienced_chefs,
+        "recipes_count_category": recipes_count_category,
+        "recipes_count_chef": recipes_count_chef,
+        "avg_cook_time": avg_cook_time,
+        "max_prep_time": max_prep_time,
+        "total_chef_exp": total_chef_exp,
+    }
+    return render(request, "dashboard.html", context)
+
+
 

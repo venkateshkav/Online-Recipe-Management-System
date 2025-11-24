@@ -9,8 +9,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 class Recipe(models.Model):
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField()
-    ingredients = models.TextField()
+    ingredients = models.TextField() 
     steps = models.TextField()
     prep_time = models.PositiveIntegerField()
     cook_time = models.PositiveIntegerField()

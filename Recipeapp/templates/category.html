@@ -4,21 +4,254 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #e7f0ff, #f5faff);
+        padding: 40px 0;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 14px 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        z-index: 1000;
+    }
+
+    .nav-left {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1c8c4d;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 24px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-size: 15px;
+        background: white;
+        color: #333;
+        transition: 0.3s ease;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        background: #1c8c4d;
+        color: #fff;
+        box-shadow: 0 5px 12px rgba(28,140,77,0.25);
+        transform: translateY(-2px);
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+        width: 90%;
+        max-width: 900px;
+        margin: 40px auto;
+        background: rgba(255,255,255,0.7);
+        padding: 35px;
+        border-radius: 20px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    h1, h2 {
+        color: #2b2b2b;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-top: 35px;
+        border-left: 5px solid #1c8c4d;
+        padding-left: 10px;
+        text-align: left;
+    }
+
+    /* FORM CARD */
+    .card {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: scale(1.01);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    }
+
+    table {
+        width: 100%;
+    }
+
+    table tr td {
+        padding: 12px 0;
+    }
+
+    label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: 2px solid #d9e2f3;
+        background: #f9fbff;
+        transition: 0.3s;
+        font-size: 15px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        border-color: #1c8c4d;
+        background: white;
+        box-shadow: 0 0 10px rgba(28,140,77,0.4);
+        outline: none;
+    }
+
+    button {
+        background: #1c8c4d;
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        display: block;
+        margin: 18px auto 0;
+    }
+
+    button:hover {
+        background: #146d39;
+        box-shadow: 0 6px 15px rgba(20,109,57,0.3);
+        transform: translateY(-2px);
+    }
+
+    /* CATEGORY LIST CARD */
+    .item {
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        margin-top: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        transition: 0.3s;
+    }
+
+    .item:hover {
+        transform: scale(1.01);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    .item li {
+        list-style: none;
+        padding: 6px 0;
+        font-size: 15px;
+        color: #333;
+    }
+
+    .actions {
+        margin-top: 10px;
+    }
+
+    .actions a {
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 10px;
+        margin-right: 10px;
+        font-weight: 600;
+        color: #fff;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .edit-btn {
+        background: #28a745;
+    }
+    .edit-btn:hover {
+        background: #1f8a38;
+    }
+
+    .delete-btn {
+        background: #dc3545;
+    }
+    .delete-btn:hover {
+        background: #b52b3a;
+    }
+</style>
+
 </head>
 <body>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_table}}
-        <button>ADD</button>
-    </form>
-    <h2>Category Data</h2>
+
+<div class="navbar">
+    <div class="nav-left">Recipe POS</div>
+
+    <div class="nav-links">
+        <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="{% url 'chef' %}" class="{% if request.resolver_match.url_name == 'chef' %}active{% endif %}">Chefs</a>
+        <a href="{% url 'recipe' %}" class="{% if request.resolver_match.url_name == 'recipe' %}active{% endif %}">Recipes</a>
+        <a href="{% url 'category' %}" class="{% if request.resolver_match.url_name == 'category' %}active{% endif %}">Categories</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <h1>Add Category</h1>
+
+    <div class="card">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <button type="submit">ADD CATEGORY</button>
+        </form>
+    </div>
+
+    <h2>Category List</h2>
+
     {% for i in data %}
-    <hr>
-    <li> {{i.name}} </li>
-    <li> {{i.description}} </li>
-    <li> {{i.created_on}} </li>
-    <li> <a href="{% url 'edit_ct' i.id %}">Edit</a> <a href="{% url 'del_ct' i.id %}">Delete</a> </li>
-    <hr>
+    <div class="item">
+        <li><strong>Name:</strong> {{ i.name }}</li>
+        <li><strong>Description:</strong> {{ i.description }}</li>
+        <li><strong>Created On:</strong> {{ i.created_on }}</li>
+
+        <div class="actions">
+            <a class="edit-btn" href="{% url 'edit_ct' i.id %}">Edit</a>
+            <a class="delete-btn" href="{% url 'del_ct' i.id %}">Delete</a>
+        </div>
+    </div>
     {% endfor %}
+
+</div>
+
 </body>
 </html>

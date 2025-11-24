@@ -1,0 +1,75 @@
+<!-- NAVBAR START -->
+<style>
+    .navbar {
+        width: 100%;
+        background: #ffffff;
+        padding: 14px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .nav-left {
+        font-size: 22px;
+        font-weight: 600;
+        color: #1c8c4d;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        background: #e9f7ef;
+        color: #1c8c4d;
+    }
+
+    /* extra glow animation */
+    .nav-links a:hover {
+        box-shadow: 0 4px 8px rgba(28, 140, 77, 0.2);
+    }
+</style>
+
+<div class="navbar">
+    <div class="nav-left">Recipe POS</div>
+
+    <div class="nav-links">
+        <a href="{% url 'dashboard' %}" 
+           class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+           Dashboard
+        </a>
+
+        <a href="{% url 'chef' %}" 
+           class="{% if request.resolver_match.url_name == 'chef' %}active{% endif %}">
+           Chefs
+        </a>
+
+        <a href="{% url 'recipe' %}" 
+           class="{% if request.resolver_match.url_name == 'recipe' %}active{% endif %}">
+           Recipes
+        </a>
+
+        <a href="{% url 'category' %}" 
+           class="{% if request.resolver_match.url_name == 'category' %}active{% endif %}">
+           Categories
+        </a>
+    </div>
+</div>
+<!-- NAVBAR END -->
